@@ -1,3 +1,5 @@
+import 'package:bookify/screens/login_screen.dart';
+import 'package:bookify/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/screens.dart';
@@ -10,14 +12,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Bookify',
-      initialRoute: 'home',
+      initialRoute: 'login',
       routes: {
-        'home': (_) => HomeScreen(),
-        'details': (_) => DetailsScreen(),
+        'home': (_) => const HomeScreen(),
+        'details': (_) => const DetailsScreen(),
+        'login': (_) => LoginScreen(),
+        'register': (_) => RegisterScreen(),
       },
       theme: ThemeData.light().copyWith(
           appBarTheme: AppBarTheme(
-        color: Color.fromARGB(255, 83, 191, 241),
+        color: Color.fromARGB(255, 136, 88, 218),
       )),
     );
   }
