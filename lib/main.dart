@@ -1,10 +1,25 @@
+import 'package:bookify/providers/libro_provider.dart';
 import 'package:bookify/screens/login_screen.dart';
 import 'package:bookify/screens/register_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/screens.dart';
 
-void main() => runApp(MyApp());
+void main()  {
+runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => LibroProvider(),
+          lazy: false,
+        ),
+        
+      ],
+      child:  MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   @override

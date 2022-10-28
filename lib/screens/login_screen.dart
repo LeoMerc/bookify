@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                     height: 30,
                   ),
                   ChangeNotifierProvider(
-                    create: (_) => RegisterFormProvider(),
+                    create: (_) => LoginFormProvider(),
                     child: _LoginForm(),
                   ),
                 ]),
@@ -61,7 +61,7 @@ class LoginScreen extends StatelessWidget {
 class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final loginForm = Provider.of<RegisterFormProvider>(context);
+    final loginForm = Provider.of<LoginFormProvider>(context);
 
     return Container(
       child: Form(

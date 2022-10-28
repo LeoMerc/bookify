@@ -1,10 +1,16 @@
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
+
+import '../providers/libro_provider.dart';
+import '../screens/details_screen.dart';
 
 class BookSlider extends StatelessWidget {
   const BookSlider({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final libroProvider = Provider.of<LibroProvider>(context);
+
     return Container(
       width: double.infinity,
       height: 275,
@@ -15,7 +21,7 @@ class BookSlider extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Populares',
+              libroProvider.libroLista[0].genre,
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -38,6 +44,8 @@ class BookSlider extends StatelessWidget {
 class _BookPoster extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+        final libroProvider = Provider.of<LibroProvider>(context);
+
     return Container(
       width: 130,
       height: 190,
@@ -48,14 +56,20 @@ class _BookPoster extends StatelessWidget {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'details',
-                arguments: 'book-instance'),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailsScreen(),
+              ),
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: FadeInImage(
                 // height: 185,
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage('https://via.placeholder.com/300x400'),
+                image: NetworkImage(
+                  'http://10.0.2.2:8090/api/files/books/${libroProvider.libroLista[0].id}/${libroProvider.libroLista[0].img}',
+                ),
               ),
             ),
           ),
@@ -63,7 +77,7 @@ class _BookPoster extends StatelessWidget {
             height: 5,
           ),
           Text(
-            'Las TIC en la educación',
+            libroProvider.libroLista[0].name,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             textAlign: TextAlign.center,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class RegisterFormProvider extends ChangeNotifier {
+class LoginFormProvider extends ChangeNotifier {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";

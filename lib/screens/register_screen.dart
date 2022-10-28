@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
+import '../const.dart';
+import '../providers/register_form_providers .dart';
 import '../ui/input_decorations.dart';
 import '../widgets/card_container.dart';
 
@@ -37,7 +39,7 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
-           InkWell(
+              InkWell(
                 onTap: () {
                   Navigator.pop(context);
                 },
@@ -95,7 +97,7 @@ class _RegisterForm extends StatelessWidget {
               ),
               TextFormField(
                 onChanged: (value) {
-                 registerForm.password = value;
+                  registerForm.password = value;
                 },
                 validator: (value) {
                   return (value != null && value.length >= 6)
@@ -113,20 +115,49 @@ class _RegisterForm extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
+              TextFormField(
+                onChanged: (value) {
+                  registerForm.confirmPassword = value;
+                },
+                validator: (value) {
+                  return (value != null && value.length >= 6)
+                      ? null
+                      : 'La contrasena debe de ser de 6 characteres';
+                },
+                autocorrect: false,
+                obscureText: true,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecorations.authInputDecoration(
+                    hintText: '*********',
+                    labelText: 'Confirmar contrasena',
+                    prefixIcon: Icons.lock_outline),
+              ),
+              SizedBox(
+                height: 30,
+              ),
               MaterialButton(
                 disabledColor: Color.fromARGB(255, 136, 88, 218),
-              
-
                 onPressed: registerForm.isLoading
                     ? null
                     : () async {
-                        FocusScope.of(context).unfocus();
-                        if (!registerForm.isValidForm()) return;
-                        registerForm.isLoading = true;
-                        await Future.delayed(Duration(seconds: 2));
-                      //TODO: VALIDAR SI EL Sign up ES CORRECTO
-                        registerForm.isLoading = false;  
-                        Navigator.pushReplacementNamed(context, 'home');
+                        if (registerForm.password ==
+                            registerForm.confirmPassword) {
+                          FocusScope.of(context).unfocus();
+                          if (!registerForm.isValidForm()) return;
+
+                          final user = await client.users.create(body: {
+                            'email': registerForm.email,
+                            'password': registerForm.password,
+                            'passwordConfirm': registerForm.confirmPassword,
+                          });
+                          if (user.id.isNotEmpty) {
+                            Navigator.pushReplacementNamed(context, 'home');
+                          } else {
+                            print('no se creo');
+                          }
+                        } else {
+                          print('a');
+                        }
                       },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
@@ -134,11 +165,15 @@ class _RegisterForm extends StatelessWidget {
                 color: Colors.deepPurple,
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 80, vertical: 15),
-                  child:registerForm.isLoading? CircularProgressIndicator(color: Colors.white,) :Text( 'Ingresar',
-                    style: const TextStyle(color: Colors.white, fontSize: 18)),
-              ),
+                  child: registerForm.isLoading
+                      ? CircularProgressIndicator(
+                          color: Colors.white,
+                        )
+                      : Text('Ingresar',
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 18)),
                 ),
-              
+              ),
             ],
           )),
     );
