@@ -1,3 +1,4 @@
+import 'package:bookify/const.dart';
 import 'package:bookify/providers/login_form_providers.dart';
 import 'package:bookify/widgets/auth_background.dart';
 import 'package:flutter/material.dart';
@@ -120,11 +121,16 @@ class _LoginForm extends StatelessWidget {
                     : () async {
                         FocusScope.of(context).unfocus();
                         if (!loginForm.isValidForm()) return;
-                        loginForm.isLoading = true;
-                        await Future.delayed(Duration(seconds: 2));
-                        //TODO: VALIDAR SI EL LOGIN ES CORRECTO
-                        loginForm.isLoading = false;
-                        Navigator.pushReplacementNamed(context, 'home');
+                       
+                        final res = await client.users
+                            .authViaEmail(loginForm.email, loginForm.password);
+
+                      if(res.token.isNotEmpty){
+                      await  Navigator.pushReplacementNamed(context, 'home');
+
+                      }
+
+                        
                       },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
