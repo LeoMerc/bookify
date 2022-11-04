@@ -4,9 +4,14 @@ import 'package:provider/provider.dart';
 import '../providers/libro_provider.dart';
 import '../screens/details_screen.dart';
 
-class BookSlider extends StatelessWidget {
-  const BookSlider({Key? key}) : super(key: key);
+class BookSliderProgramming extends StatefulWidget {
+  const BookSliderProgramming({Key? key}) : super(key: key);
 
+  @override
+  State<BookSliderProgramming> createState() => _BookSliderProgrammingState();
+}
+
+class _BookSliderProgrammingState extends State<BookSliderProgramming> {
   @override
   Widget build(BuildContext context) {
     final libroProvider = Provider.of<LibroProvider>(context);
@@ -31,8 +36,8 @@ class BookSlider extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 20,
-              itemBuilder: (_, int index) => _BookPoster(),
+              itemCount: libroProvider.libroLista.length,
+              itemBuilder: (_, int index) => _BookPoster(index: index,),
             ),
           ),
         ],
@@ -42,9 +47,12 @@ class BookSlider extends StatelessWidget {
 }
 
 class _BookPoster extends StatelessWidget {
+  final index;
+
+  const _BookPoster({super.key, required this.index});
   @override
   Widget build(BuildContext context) {
-        final libroProvider = Provider.of<LibroProvider>(context);
+    final libroProvider = Provider.of<LibroProvider>(context);
 
     return Container(
       width: 130,
@@ -68,7 +76,7 @@ class _BookPoster extends StatelessWidget {
                 // height: 185,
                 placeholder: AssetImage('assets/no-image.jpg'),
                 image: NetworkImage(
-                  'http://10.0.2.2:8090/api/files/books/${libroProvider.libroLista[0].id}/${libroProvider.libroLista[0].img}',
+                  'http://10.0.2.2:8090/api/files/books/${libroProvider.libroLista[index].id}/${libroProvider.libroLista[index].img}',
                 ),
               ),
             ),
@@ -77,7 +85,7 @@ class _BookPoster extends StatelessWidget {
             height: 5,
           ),
           Text(
-            libroProvider.libroLista[0].name,
+            libroProvider.libroLista[index].name,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             textAlign: TextAlign.center,

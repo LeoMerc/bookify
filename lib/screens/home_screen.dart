@@ -19,11 +19,11 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             CardSwiper(),
-            BookSlider(),
-            BookSlider(),
-            BookSlider(),
-            BookSlider(),
-            BookSlider(),
+            BookSliderProgramming(),
+            BookSliderProgramming(),
+            BookSliderProgramming(),
+            BookSliderProgramming(),
+            BookSliderProgramming(),
           ],
         ),
       ),
