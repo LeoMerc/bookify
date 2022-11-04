@@ -1,3 +1,4 @@
+import 'package:bookify/classes/libro.dart';
 import 'package:bookify/providers/libro_provider.dart';
 import 'package:bookify/widgets/custom_bottom_sheet.dart';
 import 'package:flutter/material.dart';
@@ -9,17 +10,18 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 import '../const.dart';
 import '../widgets/custom_button.dart';
- 
-class AddBookScreen extends StatefulWidget {
-  const AddBookScreen({
-    Key? key,
-  }) : super(key: key);
 
+class EditBookScreen extends StatefulWidget {
+  const EditBookScreen({
+    Key? key,
+    required this.libro,
+  }) : super(key: key);
+  final Libro libro;
   @override
-  _AddBookScreenState createState() => _AddBookScreenState();
+  _EditBookScreenState createState() => _EditBookScreenState();
 }
 
-class _AddBookScreenState extends State<AddBookScreen> {
+class _EditBookScreenState extends State<EditBookScreen> {
   DateTime initialDate = DateTime.now();
   DateTime endDate = DateTime.now();
   late TextEditingController nombreLibro;
@@ -35,8 +37,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
   XFile? image;
   final formKey = GlobalKey<FormState>();
 
-   
-
   @override
   void initState() {
     super.initState();
@@ -44,11 +44,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
     authorLibro = TextEditingController();
     generoLibro = TextEditingController();
     linkLibro = TextEditingController();
+
+    nombreLibro.text = widget.libro.name;
+    authorLibro.text = widget.libro.author;
+    generoLibro.text = widget.libro.genre;
+    linkLibro.text = widget.libro.link.toString();
   }
 
   @override
   Widget build(BuildContext context) {
-   final LibroProvider libroProvider =
+    final LibroProvider libroProvider =
         Provider.of<LibroProvider>(context, listen: false);
     return Scaffold(
       key: scaffoldKey,
@@ -57,8 +62,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
         leading: Transform.scale(
           scale: .7,
           child: InkWell(
-            
-            child: Icon(
+            child: const Icon(
               Icons.chevron_left_rounded,
               color: Colors.white,
               size: 50,
@@ -68,13 +72,13 @@ class _AddBookScreenState extends State<AddBookScreen> {
             },
           ),
         ),
-        title: Text(
-          'Agregar libro',
+        title: const Text(
+          'Editar libro',
           style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.w700,
-              ),
+            color: Colors.white,
+            fontSize: 22,
+            fontWeight: FontWeight.w700,
+          ),
         ),
         actions: const [],
         centerTitle: false,
@@ -181,19 +185,18 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 'Nombre',
                                 'Clean Code',
                               ),
-                              style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
                           ),
                         ),
 
                         //FECHAS
                         //TODO: verificar que fecha inicial < fecha final
-                     
 
                         //DESCRIPCION
                         Padding(
@@ -209,7 +212,6 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'El author es requerido' /* Descripcion es requerida */;
-                                  
                                 }
                                 return null;
                               },
@@ -218,12 +220,12 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 'Author',
                                 'Roberto Lopez',
                               ),
-                              style:TextStyle(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
                               maxLines: 3,
                             ),
                           ),
@@ -242,9 +244,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               obscureText: false,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 
-                                    'El link es requerido' /* DireccionF es requerida */;
-                                  
+                                  return 'El link es requerido' /* DireccionF es requerida */;
                                 }
                                 return null;
                               },
@@ -253,18 +253,17 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 'Link',
                                 'https://....',
                               ),
-                              style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                            
                           ),
                         ),
-                      
-                      Padding(
+
+                        Padding(
                           padding:
                               const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                           child: Material(
@@ -276,9 +275,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               obscureText: false,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
-                                  return 
-                                    'El genero es requerido' /* Direccion es requerida */;
-                                  
+                                  return 'El genero es requerido' /* Direccion es requerida */;
                                 }
                                 return null;
                               },
@@ -287,17 +284,16 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                 'Genero',
                                 'Programacion',
                               ),
-                              style: TextStyle(
-                                    fontFamily: 'Roboto',
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.normal,
-                                  ),
+                              style: const TextStyle(
+                                fontFamily: 'Roboto',
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                            
                           ),
                         ),
-                      
+
                         //BOTON AGREGAR EVENTO
                         Row(
                           mainAxisSize: MainAxisSize.max,
@@ -322,52 +318,77 @@ class _AddBookScreenState extends State<AddBookScreen> {
                                     contentType: MediaType("image", "jpg"),
                                   );
                                   try {
-                                    final record = await 
-                                        client.records
-                                        .create('books', body: {
-                                      "name": nombreLibro.text,
-                                      "author": authorLibro.text,
-                                      "genre": generoLibro.text,
-                                      "link": linkLibro.text,
-                                    }, files: [
-                                      multipartFile
-                                    ]);
+                                    final record = await client.records.update(
+                                        'books', widget.libro.id,
+                                        body: {
+                                          "name": nombreLibro.text,
+                                          "author": authorLibro.text,
+                                          "genre": generoLibro.text,
+                                          "link": linkLibro.text,
+                                        },
+                                        files: [
+                                          multipartFile
+                                        ]);
 
-                                       await libroProvider.getTemas();
+                                    await libroProvider.getTemas();
 
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                         content: Text(
-                                            'Se agrego exitosamente el libro' /* Ingresar */,
-                                          ),
+                                          'Se modifico exitosamente el libro' /* Ingresar */,
                                         ),
-                                      
+                                      ),
                                     );
                                     Navigator.of(context).pop();
+                                                                        Navigator.of(context).pop();
+
                                   } catch (e) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
+                                      const SnackBar(
                                         content: Text(
-                                            'No se pudo agregar el libro' /* Ingresar */,
-                                          
+                                          'No se pudo modificar el libro' /* Ingresar */,
                                         ),
                                       ),
                                     );
                                   }
                                 } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text(
-                                          'Ingrese una foto' /* Ingresar */,
-                                        
+                                  try {
+                                    final record = await client.records.update(
+                                      'books',
+                                      widget.libro.id,
+                                      body: {
+                                        "name": nombreLibro.text,
+                                        "author": authorLibro.text,
+                                        "genre": generoLibro.text,
+                                        "link": linkLibro.text,
+                                      },
+                                    );
+
+                                    await libroProvider.getTemas();
+
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'Se modifico exitosamente el libro' /* Ingresar */,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop();
+                                    
+                                  } catch (e) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'No se pudo modificar el libro' /* Ingresar */,
+                                        ),
+                                      ),
+                                    );
+                                  }
                                 }
                               },
-                              text: 
-                                'Agregar libro' /* Agregar Evento */,
-                              
+                              text: 'Editar libro' /* Agregar Evento */,
+
                               // icon: Icon(
                               //   Icons.event_available,
                               //   color: AppTheme.of(context).alternate,
@@ -376,14 +397,14 @@ class _AddBookScreenState extends State<AddBookScreen> {
                               options: ButtonOptions(
                                 width: 400,
                                 height: 50,
-                                color: Color.fromARGB(255, 136, 88, 218),
-                                textStyle: TextStyle(
-                                      fontFamily: 'Roboto',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w300,
-                                    ),
+                                color: const Color.fromARGB(255, 136, 88, 218),
+                                textStyle: const TextStyle(
+                                  fontFamily: 'Roboto',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w300,
+                                ),
                                 elevation: 3,
-                                borderSide: BorderSide(
+                                borderSide: const BorderSide(
                                   color: Colors.black,
                                   width: 0,
                                 ),
@@ -410,27 +431,23 @@ class _AddBookScreenState extends State<AddBookScreen> {
     String hintText,
   ) {
     return InputDecoration(
-      labelText: 
-        labelText /* Nombre de Evento */,
-      
-      labelStyle: TextStyle(
-            fontFamily: 'Roboto',
-            color:Colors.black,
-            fontSize: 15,
-            fontWeight: FontWeight.normal,
-          ),
-      hintText: 
-        hintText /* Nombre del Evento... */,
-      
+      labelText: labelText /* Nombre de Evento */,
+      labelStyle: const TextStyle(
+        fontFamily: 'Roboto',
+        color: Colors.black,
+        fontSize: 15,
+        fontWeight: FontWeight.normal,
+      ),
+      hintText: hintText /* Nombre del Evento... */,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.black, 
+        borderSide: const BorderSide(
+          color: Colors.black,
           width: 1,
         ),
         borderRadius: BorderRadius.circular(8),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(
+        borderSide: const BorderSide(
           color: Colors.black,
           width: 1,
         ),
@@ -445,10 +462,11 @@ class _AddBookScreenState extends State<AddBookScreen> {
     //TODO: imagen de camara como placeholder
     if (image == null) {
       return Transform.scale(
-        scale: 0.5,
-        child: const Image(
-          image: NetworkImage('https://www.pngall.com/wp-content/uploads/4/Animated-Camera-PNG-Image.png'),
-          fit: BoxFit.contain,
+        scale: 1,
+        child: Image(
+          image: NetworkImage(
+              'http://10.0.2.2:8090/api/files/books/${widget.libro.id}/${widget.libro.img}'),
+          fit: BoxFit.cover,
         ),
       );
     } else if (image.startsWith('http')) {

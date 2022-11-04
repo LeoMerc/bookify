@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import '../providers/libro_provider.dart';
 import '../screens/details_screen.dart';
 
-class BookSliderProgramming extends StatefulWidget {
-  const BookSliderProgramming({Key? key}) : super(key: key);
+class BookSliderMatematicas extends StatefulWidget {
+  const BookSliderMatematicas({Key? key}) : super(key: key);
 
   @override
-  State<BookSliderProgramming> createState() => _BookSliderProgrammingState();
+  State<BookSliderMatematicas> createState() => _BookSliderMatematicasState();
 }
 
-class _BookSliderProgrammingState extends State<BookSliderProgramming> {
+class _BookSliderMatematicasState extends State<BookSliderMatematicas> {
   @override
   Widget build(BuildContext context) {
     final libroProvider = Provider.of<LibroProvider>(context);
@@ -26,7 +26,7 @@ class _BookSliderProgrammingState extends State<BookSliderProgramming> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: Text(
-              'Programacion',
+              'Matematicas',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
@@ -37,7 +37,7 @@ class _BookSliderProgrammingState extends State<BookSliderProgramming> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: libroProvider.libroLista.length,
-              itemBuilder: (_, int index) => libroProvider.libroLista[index].genre == 'Programacion' ? _BookPoster(index: index,) : Container(),
+              itemBuilder: (_, int index) => libroProvider.libroLista[index].genre == 'Matematicas' ? _BookPoster(index: index,) : Container(),
             ),
           ),
         ],

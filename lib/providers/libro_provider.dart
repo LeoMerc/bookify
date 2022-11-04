@@ -10,7 +10,7 @@ import '../const.dart';
 class LibroProvider extends ChangeNotifier {
   String expositorName = '';
   List<Libro> libroLista = [];
-
+  bool isAdmin = false;
   LibroProvider() {
     print('LibroProvider inicializado');
 

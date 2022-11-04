@@ -81,7 +81,7 @@ class _CustomButtonState extends State<CustomButton> {
             style: TextStyle(
                 color: widget.cerrar
                     ? Colors.purple
-                    : Colors.grey,
+                    : Colors.white,
                 fontWeight: FontWeight.w400),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

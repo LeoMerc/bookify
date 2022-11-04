@@ -1,6 +1,10 @@
 import 'package:bookify/screens/add_book_screen.dart';
+import 'package:bookify/widgets/book_slider_fisica.dart';
+import 'package:bookify/widgets/book_slider_matematicas.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/libro_provider.dart';
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,43 +12,44 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final LibroProvider libroProvider =
+        Provider.of<LibroProvider>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Libros'),
+        title: const Text('Libros'),
         elevation: 0,
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.search_outlined)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: const [
             CardSwiper(),
             BookSliderProgramming(),
-            BookSliderProgramming(),
-            BookSliderProgramming(),
-            BookSliderProgramming(),
-            BookSliderProgramming(),
+            BookSliderMatematicas(),
+            BookSliderFisica(),
+         
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+    floatingActionButton:   libroProvider.isAdmin ? FloatingActionButton(
         onPressed: () async {
           await Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>  AddBookScreen(),
+              builder: (context) =>  const AddBookScreen(),
             ),
           );
         },
-        backgroundColor: Color.fromARGB(255, 136, 88, 218),
+        backgroundColor: const Color.fromARGB(255, 136, 88, 218),
         elevation: 8,
-        child: Icon( 
+        child: const Icon( 
           Icons.add,
           color: Colors.white,
           size: 45,
         ),
-      ),
+      ) : Container(),
     );
   }
 }

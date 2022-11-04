@@ -1,4 +1,5 @@
 import 'package:bookify/const.dart';
+import 'package:bookify/providers/libro_provider.dart';
 import 'package:bookify/providers/login_form_providers.dart';
 import 'package:bookify/widgets/auth_background.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../widgets/card_container.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body: AuthBackground(
         child: SingleChildScrollView(
@@ -62,7 +64,8 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
-
+     final LibroProvider libroProvider =
+        Provider.of<LibroProvider>(context, listen: false);
     return Container(
       child: Form(
           key: loginForm.formKey,
@@ -124,12 +127,16 @@ class _LoginForm extends StatelessWidget {
                        
                         final res = await client.users
                             .authViaEmail(loginForm.email, loginForm.password);
+                            
+  libroProvider.isAdmin =      res.user!.profile!.data['admin'];
+            print(res.user!.profile!.data['admin']);
+            print(libroProvider.isAdmin);
 
                       if(res.token.isNotEmpty){
                       await  Navigator.pushReplacementNamed(context, 'home');
 
                       }
-
+              
                         
                       },
                 shape: RoundedRectangleBorder(
