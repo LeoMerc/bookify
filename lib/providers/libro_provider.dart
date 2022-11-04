@@ -14,10 +14,10 @@ class LibroProvider extends ChangeNotifier {
   LibroProvider() {
     print('LibroProvider inicializado');
 
-    this.getTemas();
+    getTemas();
   }
 
-  getTemas() async {
+   Future<void> getTemas() async {
     final res = await client.records.getFullList(
       'books',
     );

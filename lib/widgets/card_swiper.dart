@@ -27,7 +27,7 @@ class CardSwiper extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailsScreen(),
+                builder: (context) => DetailsScreen(libro: libroProvider.libroLista[index],),
               ),
             ),
             child: ClipRRect(

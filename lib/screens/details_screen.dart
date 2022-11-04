@@ -1,21 +1,25 @@
+import 'package:bookify/classes/libro.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
-
+  DetailsScreen({Key? key, required this.libro}) : super(key: key);
+  final Libro libro;
   @override
   Widget build(BuildContext context) {
     //ToDo: Get the book instance from the arguments
-    final String book =
-        ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-book';
+
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _CustomAppBar(),
+          _CustomAppBar(
+            libro: libro,
+          ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                _BookAndTitle(),
+                _BookAndTitle(
+                  libro: libro,
+                ),
               ],
             ),
           ),
@@ -26,6 +30,9 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
+  const _CustomAppBar({ required this.libro});
+  final Libro libro;
+
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
@@ -39,7 +46,7 @@ class _CustomAppBar extends StatelessWidget {
         title: Container(
           width: double.infinity,
           child: Text(
-            '.title',
+            libro.name,
             style: TextStyle(fontSize: 20),
           ),
           alignment: Alignment.bottomCenter,
@@ -47,7 +54,8 @@ class _CustomAppBar extends StatelessWidget {
         ),
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
-          image: NetworkImage('https://via.placeholder.com/500x300'),
+          image: NetworkImage(
+              'http://10.0.2.2:8090/api/files/books/${libro.id}/${libro.img}'),
           fit: BoxFit.cover,
         ),
       ),
@@ -56,57 +64,57 @@ class _CustomAppBar extends StatelessWidget {
 }
 
 class _BookAndTitle extends StatelessWidget {
+  final Libro libro;
+
+  const _BookAndTitle({ required this.libro});
   @override
   Widget build(BuildContext context) {
     final TextTheme textTheme = Theme.of(context).textTheme;
     return Container(
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: AssetImage('assets/loading.gif'),
-              image: NetworkImage('https://via.placeholder.com/300x400'),
-              height: 150,
+      child: Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: FadeInImage(
+                placeholder: AssetImage('assets/loading.gif'),
+                image: NetworkImage(
+                    'http://10.0.2.2:8090/api/files/books/${libro.id}/${libro.img}'),
+                height: 150,
+              ),
             ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'book.title',
-                style: textTheme.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Text(
-                'book.originalTitle',
-                style: textTheme.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Row(children: [
-                Icon(
-                  Icons.star_outline,
-                  color: Colors.yellow,
-                  size: 15,
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Text(
-                  'Book.voteAverage',
-                  style: textTheme.caption,
-                ),
-              ]),
-            ],
-          ),
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              libro.name,
+              style: TextStyle(fontSize: 18),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            Text(
+              libro.author,
+              style: TextStyle(fontSize: 18),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            Text(
+              libro.genre,
+              style: TextStyle(fontSize: 18),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
+            ),
+            Text(
+              libro.link.toString(),
+              style: TextStyle(fontSize: 15),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ],
+        ),
       ),
     );
   }

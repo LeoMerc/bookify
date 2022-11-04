@@ -49,7 +49,7 @@ class _BookSliderProgrammingState extends State<BookSliderProgramming> {
 class _BookPoster extends StatelessWidget {
   final index;
 
-  const _BookPoster({super.key, required this.index});
+  const _BookPoster({required this.index});
   @override
   Widget build(BuildContext context) {
     final libroProvider = Provider.of<LibroProvider>(context);
@@ -67,7 +67,7 @@ class _BookPoster extends StatelessWidget {
             onTap: () => Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailsScreen(),
+                builder: (context) => DetailsScreen(libro: libroProvider.libroLista[index],),
               ),
             ),
             child: ClipRRect(

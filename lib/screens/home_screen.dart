@@ -1,3 +1,4 @@
+import 'package:bookify/screens/add_book_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/widgets.dart';
@@ -25,6 +26,23 @@ class HomeScreen extends StatelessWidget {
             BookSliderProgramming(),
             BookSliderProgramming(),
           ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>  AddBookScreen(),
+            ),
+          );
+        },
+        backgroundColor: Color.fromARGB(255, 136, 88, 218),
+        elevation: 8,
+        child: Icon( 
+          Icons.add,
+          color: Colors.white,
+          size: 45,
         ),
       ),
     );
