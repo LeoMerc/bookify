@@ -11,9 +11,10 @@ class LibroProvider extends ChangeNotifier {
   String expositorName = '';
   List<Libro> libroLista = [];
   bool isAdmin = false;
+  late TextEditingController searchFieldController;
   LibroProvider() {
     print('LibroProvider inicializado');
-
+    searchFieldController = TextEditingController();
     getTemas();
   }
 
@@ -30,6 +31,39 @@ class LibroProvider extends ChangeNotifier {
     ).toList();
 
 
+    notifyListeners();
+  }
+
+  String removeDiacritics(String str) {
+    var withDia =
+        'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž';
+    var withoutDia =
+        'AAAAAAaaaaaaOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnSsYyyZz';
+
+    for (int i = 0; i < withDia.length; i++) {
+      str = str.replaceAll(withDia[i], withoutDia[i]);
+    }
+
+    return str;
+  }
+
+  void searchText() {
+    
+    if (searchFieldController.text != '') {
+      libroLista.removeWhere((element) {
+        final nombreEvento = removeDiacritics(element.name).toLowerCase();
+
+        final tempBusqueda =
+            removeDiacritics(searchFieldController.text).toLowerCase();
+        print('$nombreEvento ....... $tempBusqueda');
+        if (nombreEvento.contains(tempBusqueda)) {
+          return false;
+        }
+        return true;
+      });
+    } else {
+      getTemas();
+    }
     notifyListeners();
   }
 }

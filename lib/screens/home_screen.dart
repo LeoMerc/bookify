@@ -15,21 +15,26 @@ class HomeScreen extends StatelessWidget {
         final LibroProvider libroProvider =
         Provider.of<LibroProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Libros'),
-        elevation: 0,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
-        ],
-      ),
+      
       body: SingleChildScrollView(
         child: Column(
-          children: const [
+
+          children:  [
+            
+              TextFormField(
+                          controller: libroProvider.searchFieldController,
+                          onChanged: (_) {
+                            libroProvider.searchText();
+                          },
+                          obscureText: false,
+                          
+                        ),
+            
             CardSwiper(),
             BookSliderProgramming(),
             BookSliderMatematicas(),
             BookSliderFisica(),
-         
+
           ],
         ),
       ),
