@@ -12,7 +12,6 @@ import '../widgets/card_container.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       body: AuthBackground(
         child: SingleChildScrollView(
@@ -64,7 +63,7 @@ class _LoginForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final loginForm = Provider.of<LoginFormProvider>(context);
-     final LibroProvider libroProvider =
+    final LibroProvider libroProvider =
         Provider.of<LibroProvider>(context, listen: false);
     return Container(
       child: Form(
@@ -124,20 +123,18 @@ class _LoginForm extends StatelessWidget {
                     : () async {
                         FocusScope.of(context).unfocus();
                         if (!loginForm.isValidForm()) return;
-                       
+
                         final res = await client.users
                             .authViaEmail(loginForm.email, loginForm.password);
-                            
-  libroProvider.isAdmin =      res.user!.profile!.data['admin'];
-            print(res.user!.profile!.data['admin']);
-            print(libroProvider.isAdmin);
 
-                      if(res.token.isNotEmpty){
-                      await  Navigator.pushReplacementNamed(context, 'home');
+                        libroProvider.isAdmin =
+                            res.user!.profile!.data['admin'];
+                        print(res.user!.profile!.data['admin']);
+                        print(libroProvider.isAdmin);
 
-                      }
-              
-                        
+                        if (res.token.isNotEmpty) {
+                          await Navigator.pushReplacementNamed(context, 'home');
+                        }
                       },
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),

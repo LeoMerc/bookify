@@ -35,7 +35,7 @@ class CardSwiper extends StatelessWidget {
               child: FadeInImage(
                   placeholder: AssetImage('assets/loading.gif'),
                   image: NetworkImage(
-                    'http://10.0.2.2:8090/api/files/books/${libroProvider.libroLista[index].id}/${libroProvider.libroLista[index].img}',
+                    'https://wild-paper-5941.fly.dev/api/files/books/${libroProvider.libroLista[index].id}/${libroProvider.libroLista[index].img}',
                   ),
                   fit: BoxFit.cover),
             ),

@@ -20,7 +20,6 @@ Future<void> showAlertDialog({
     child:  Text('Continuar'),
     onPressed: () async {
       onPressedContinue();
-                              Navigator.pop(context);
 
     },
   );

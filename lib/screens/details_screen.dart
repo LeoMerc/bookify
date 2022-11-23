@@ -74,9 +74,10 @@ class _CustomAppBar extends StatelessWidget {
                         libroId: libro.id,
                       );
                       await libroProvider.getTemas();
+                                      Navigator.pop(context);
+
                     },
                   );
-                  Navigator.pop(context);
                 }),
           ],
         ) : Container(),
@@ -100,7 +101,7 @@ class _CustomAppBar extends StatelessWidget {
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
           image: NetworkImage(
-              'http://10.0.2.2:8090/api/files/books/${libro.id}/${libro.img}'),
+              'https://wild-paper-5941.fly.dev/api/files/books/${libro.id}/${libro.img}'),
           fit: BoxFit.cover,
         ),
       ),
@@ -127,7 +128,7 @@ class _BookAndTitle extends StatelessWidget {
               child: FadeInImage(
                 placeholder: AssetImage('assets/loading.gif'),
                 image: NetworkImage(
-                    'http://10.0.2.2:8090/api/files/books/${libro.id}/${libro.img}'),
+                    'https://wild-paper-5941.fly.dev/api/files/books/${libro.id}/${libro.img}'),
                 height: 150,
               ),
             ),

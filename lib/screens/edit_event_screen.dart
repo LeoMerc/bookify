@@ -465,7 +465,7 @@ class _EditBookScreenState extends State<EditBookScreen> {
         scale: 1,
         child: Image(
           image: NetworkImage(
-              'http://10.0.2.2:8090/api/files/books/${widget.libro.id}/${widget.libro.img}'),
+              'https://wild-paper-5941.fly.dev/api/files/books/${widget.libro.id}/${widget.libro.img}'),
           fit: BoxFit.cover,
         ),
       );
