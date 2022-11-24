@@ -18,9 +18,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Libros'),
         elevation: 0,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined)),
-        ],
+        
       ),
       body: SingleChildScrollView(
         child: Column(
