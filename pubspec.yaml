@@ -38,7 +38,6 @@ dependencies:
   http: ^0.13.5
   http_parser: ^4.0.2
   image_picker: ^0.8.6
-  multipart_request: ^0.3.1
   pocketbase: ^0.4.1
   provider: ^6.0.3
   url_launcher: ^6.1.7
